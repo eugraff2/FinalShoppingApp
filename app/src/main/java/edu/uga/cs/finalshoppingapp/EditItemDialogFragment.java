@@ -6,11 +6,18 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class EditItemDialogFragment extends DialogFragment {
 
@@ -19,6 +26,7 @@ public class EditItemDialogFragment extends DialogFragment {
 
     private EditText nameText;
     private EditText priceText;
+    private Button shoppingButt;
 
     int position;
     String key, itemName;
@@ -51,10 +59,14 @@ public class EditItemDialogFragment extends DialogFragment {
         price = Double.parseDouble(getArguments().getString("price"));
 
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View layout = inflater.inflate( R.layout.add_item_dialog, getActivity().findViewById( R.id.root ) );
+        final View layout = inflater.inflate( R.layout.edit_item_dialog, getActivity().findViewById( R.id.root ) );
 
         nameText = layout.findViewById(R.id.editText1);
         priceText = layout.findViewById(R.id.editText2);
+
+        shoppingButt = layout.findViewById(R.id.addShopping);
+        shoppingButt.setEnabled(true);
+        shoppingButt.setOnClickListener(new ShoppingListener() );
 
         nameText.setText(itemName);
         priceText.setText(String.valueOf(price));
@@ -110,12 +122,46 @@ public class EditItemDialogFragment extends DialogFragment {
             item.setKey( key );
 
             // get the Activity's listener to add the new job lead
-            EditItemDialogFragment.EditItemDialogListener listener = (EditItemDialogFragment.EditItemDialogListener) getActivity();            // add the new job lead
+            EditItemDialogFragment.EditItemDialogListener listener = (EditItemDialogFragment.EditItemDialogListener) getActivity();
             listener.updateItem( position, item, DELETE );
             // close the dialog
             dismiss();
         }
     } // deleteListener
+
+    private class ShoppingListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            String name = nameText.getText().toString();
+            double price = Double.parseDouble(priceText.getText().toString());
+            final Item item = new Item(name, price);
+
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("shopping");
+
+            myRef.push().setValue( item )
+                    .addOnSuccessListener( new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            // Clear the EditTexts for next use.
+                            nameText.setText("");
+                            priceText.setText("");
+                        }
+                    })
+                    .addOnFailureListener( new OnFailureListener() {
+                        @Override
+                        public void onFailure( @NonNull Exception e ) {
+                            // do nothing
+                        }
+                    });
+
+            item.setKey(key);
+            // deleting the item from the FireBase database
+            EditItemDialogFragment.EditItemDialogListener listener = (EditItemDialogFragment.EditItemDialogListener) getActivity();
+            listener.updateItem( position, item, DELETE );
+            shoppingButt.setEnabled(false);
+        }
+    } // shoppingListener
 
 
 } // EditItemDialogFragment

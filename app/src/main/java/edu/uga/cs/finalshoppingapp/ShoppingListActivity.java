@@ -59,7 +59,7 @@ public class ShoppingListActivity extends AppCompatActivity implements AddItemDi
 
         // get a Firebase DB instance reference
         db = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = db.getReference("items");
+        DatabaseReference myRef = db.getReference("shopping");
 
         // Set up a listener (event handler) to receive a value for the database reference.
         // This type of listener is called by Firebase once by immediately executing its onDataChange method
@@ -146,7 +146,7 @@ public class ShoppingListActivity extends AppCompatActivity implements AddItemDi
             // Note that we are using a specific key (one child in the list)
             DatabaseReference ref = db
                     .getReference()
-                    .child( "items" )
+                    .child( "shopping" )
                     .child( item.getKey() );
 
             // This listener will be invoked asynchronously, hence no need for an AsyncTask class, as in the previous apps
@@ -182,7 +182,7 @@ public class ShoppingListActivity extends AppCompatActivity implements AddItemDi
             // Note that we are using a specific key (one child in the list)
             DatabaseReference ref = db
                     .getReference()
-                    .child( "items" )
+                    .child( "shopping" )
                     .child( item.getKey() );
 
             // This listener will be invoked asynchronously, hence no need for an AsyncTask class, as in the previous apps
