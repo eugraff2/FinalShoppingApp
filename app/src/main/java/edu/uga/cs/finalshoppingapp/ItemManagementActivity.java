@@ -26,6 +26,7 @@ public class ItemManagementActivity extends AppCompatActivity {
         Button viewButt = findViewById(R.id.viewallButton);
         Button settleButt = findViewById(R.id.settleButton);
         Button slistButt = findViewById(R.id.shoppingButton);
+        Button logoutButt = findViewById(R.id.logoutButton);
         signedinText = findViewById(R.id.textView3);
 
         // Setup a listener for a change in the sign in status (authentication status change)
@@ -50,7 +51,7 @@ public class ItemManagementActivity extends AppCompatActivity {
         viewButt.setOnClickListener(new viewallListener());
         settleButt.setOnClickListener(new settleListener());
         slistButt.setOnClickListener(new shoppingListener());
-
+        logoutButt.setOnClickListener(new logoutListener());
 
     } // onCreate
 
@@ -85,5 +86,15 @@ public class ItemManagementActivity extends AppCompatActivity {
             view.getContext().startActivity(intent);
         }
     }
+
+    private class logoutListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(view.getContext(), MainActivity.class);
+            FirebaseAuth.getInstance().signOut();
+            view.getContext().startActivity(intent);
+        }
+    }
+
 
 } // ItemManagementActivity

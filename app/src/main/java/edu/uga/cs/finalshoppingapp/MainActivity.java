@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
     // This method is called once the Firebase sign-in activity (launched above) returns (completes).
     // Then, the current (logged-in) Firebase user can be obtained.
-    // Subsequently, there is a transition to the JobLeadManagementActivity.
+    // Subsequently, there is a transition to the ItemManagementActivity.
     private void onLoginResult( FirebaseAuthUIAuthenticationResult result ) {
         IdpResponse response = result.getIdpResponse();
         if (result.getResultCode() == RESULT_OK) {
@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
-            // after a successful sign in, start the job leads management activity
             Intent intent = new Intent( this, ItemManagementActivity.class );
             startActivity( intent );
         }

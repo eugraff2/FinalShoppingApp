@@ -43,7 +43,7 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
         return new ItemHolder( view );
     }
 
-    // This method fills in the values of the Views to show a JobLead
+    // This method fills in the values of the Views to show a item
     @Override
     public void onBindViewHolder( ItemHolder holder, int position ) {
         Item item = itemList.get( position );
@@ -59,9 +59,9 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
         // We can attach an OnClickListener to the itemView of the holder;
         // itemView is a public field in the Holder class.
         // It will be called when the user taps/clicks on the whole item, i.e., one of
-        // the job leads shown.
+        // the items shown.
         // This will indicate that the user wishes to edit (modify or delete) this item.
-        // We create and show an EditJobLeadDialogFragment.
+        // We create and show an EditItemDialogFragment.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

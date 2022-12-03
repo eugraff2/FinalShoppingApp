@@ -54,16 +54,16 @@ public class AddItemDialogFragment extends DialogFragment {
     private class AddItemListener implements DialogInterface.OnClickListener {
         @Override
         public void onClick(DialogInterface dialog, int which) {
-            // get the new job lead data from the user
+            // get the new item data from the user
             String name = nameText.getText().toString();
             Double price = Double.parseDouble(priceText.getText().toString());
 
             // create a new item object
             Item item = new Item(name, price);
-            // get the Activity's listener to add the new job lead
+            // get the Activity's listener to add the new item
             AddItemDialogListener listener = (AddItemDialogListener) getActivity();
 
-            // add the new job lead
+            // add the new item
             listener.addItem( item );
 
             // close the dialog

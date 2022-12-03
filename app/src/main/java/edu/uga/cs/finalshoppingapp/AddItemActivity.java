@@ -40,15 +40,15 @@ public class AddItemActivity extends AppCompatActivity {
             double price = Double.parseDouble(priceText.getText().toString());
             final Item item = new Item(name, price);
 
-            // Add a new element (JobLead) to the list of job leads in Firebase.
+            // Add a new element (Item) to the list of items in Firebase.
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference("items");
 
             // First, a call to push() appends a new node to the existing list (one is created
             // if this is done for the first time).  Then, we set the value in the newly created
-            // list node to store the new job lead.
+            // list node to store the new item.
             // This listener will be invoked asynchronously, as no need for an AsyncTask, as in
-            // the previous apps to maintain job leads.
+            // the previous apps to maintain items.
             myRef.push().setValue( item )
                     .addOnSuccessListener( new OnSuccessListener<Void>() {
                         @Override

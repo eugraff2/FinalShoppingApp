@@ -46,14 +46,14 @@ public class ShoppingListActivity extends AppCompatActivity implements AddItemDi
             }
         });
 
-        // initialize the Job Lead list
+        // initialize the Item list
         itemList = new ArrayList<Item>();
 
         // use a linear layout manager for the recycler view
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        // the recycler adapter with job leads is empty at first; it will be updated later
+        // the recycler adapter with item is empty at first; it will be updated later
         recyclerAdapter = new ItemRecyclerAdapter( itemList, ShoppingListActivity.this );
         recyclerView.setAdapter( recyclerAdapter );
 
@@ -66,12 +66,12 @@ public class ShoppingListActivity extends AppCompatActivity implements AddItemDi
         // and then each time the value at Firebase changes.
         //
         // This listener will be invoked asynchronously, hence no need for an AsyncTask class, as in the previous apps
-        // to maintain job leads.
+        // to maintain items.
         myRef.addValueEventListener( new ValueEventListener() {
 
             @Override
             public void onDataChange( @NonNull DataSnapshot snapshot ) {
-                // Once we have a DataSnapshot object, we need to iterate over the elements and place them on our job lead list.
+                // Once we have a DataSnapshot object, we need to iterate over the elements and place them on our item list.
                 itemList.clear(); // clear the current content; this is inefficient!
                 for( DataSnapshot postSnapshot: snapshot.getChildren() ) {
                     Item item = postSnapshot.getValue(Item.class);
@@ -89,7 +89,7 @@ public class ShoppingListActivity extends AppCompatActivity implements AddItemDi
         } );
     }
 
-    // this is our own callback for a AddJobLeadDialogFragment which adds a new job lead.
+    // this is our own callback for a AddItemDialogFragment which adds a new item.
     public void addItem(Item item) {
         // add the new job lead
         // Add a new element (JobLead) to the list of job leads in Firebase.
@@ -139,7 +139,7 @@ public class ShoppingListActivity extends AppCompatActivity implements AddItemDi
     public void updateItem( int position, Item item, int action ) {
         if( action == EditItemDialogFragment.SAVE ) {
 
-            // Update the recycler view to show the changes in the updated job lead in that view
+            // Update the recycler view to show the changes in the updated item in that view
             recyclerAdapter.notifyItemChanged( position );
 
             // Update this job lead in Firebase
