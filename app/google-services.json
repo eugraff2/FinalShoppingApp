@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "694683092181",
+    "project_id": "finalshoppingapp-e5e01",
+    "storage_bucket": "finalshoppingapp-e5e01.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:694683092181:android:a2bd1f9eb7a74c6bbd0e5c",
+        "android_client_info": {
+          "package_name": "edu.uga.cs.finalshoppingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "694683092181-hov8im04knuj0u2s8ql21a5i16i5ag1g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3saTF5iDs490nujpF5t3s33YOPO-GSME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "694683092181-hov8im04knuj0u2s8ql21a5i16i5ag1g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
