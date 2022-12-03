@@ -1,7 +1,9 @@
 package edu.uga.cs.finalshoppingapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,21 +31,63 @@ public class ShoppingListActivity extends AppCompatActivity implements AddItemDi
     private List<Item> itemList;
     private FirebaseDatabase db;
 
+    public static final int DELETE = 2;
+
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
 
         super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_viewall_items );
+        setContentView( R.layout.activity_shopping_items );
 
         recyclerView = findViewById( R.id.recyclerView );
 
         FloatingActionButton floatingButton = findViewById(R.id.floatingActionButton);
+        Button checkoutButton = findViewById(R.id.button4);
+
         floatingButton.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment newFragment = new AddItemDialogFragment();
                 newFragment.show( getSupportFragmentManager(), null);
             }
+        });
+
+        checkoutButton.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i = 0; i < itemList.size(); i++) {
+
+                    Item item = itemList.get(i);
+                    String key = item.getKey();
+                    String name = item.getName();
+                    double price = item.getPrice();
+
+                    final Item purchasedItem = new Item(name, price);
+
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference myRef = database.getReference("purchased");
+
+                    myRef.push().setValue( item )
+                            .addOnSuccessListener( new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+
+                                }
+                            })
+                            .addOnFailureListener( new OnFailureListener() {
+                                @Override
+                                public void onFailure( @NonNull Exception e ) {
+                                    // do nothing
+                                }
+                            });
+
+                    item.setKey(key);
+                    // deleting the item from the FireBase database
+                    updateItem(i, item, DELETE );
+                } // end for
+
+            }
+
         });
 
         // initialize the Item list

@@ -11,7 +11,7 @@
         android:layout_width="363dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:text="Shopping List"
+        android:text="Shopping Basket"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
