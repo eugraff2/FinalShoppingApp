@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -67,7 +66,7 @@ public class EditItemDialogFragment extends DialogFragment {
         shoppingButt = layout.findViewById(R.id.addShopping);
         shoppingButt.setEnabled(true);
 
-        if (getActivity() instanceof ShoppingListActivity) {
+        if (getActivity() instanceof BasketActivity) {
             shoppingButt.setText("Move back to \"all items\" list");
             shoppingButt.setOnClickListener(new MoveBackListener());
         } else {
@@ -139,10 +138,10 @@ public class EditItemDialogFragment extends DialogFragment {
         public void onClick(View v) {
             String name = nameText.getText().toString();
             double price = Double.parseDouble(priceText.getText().toString());
-            final Item item = new Item(name, price);
+            Item item = new Item(name, price);
 
             FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference myRef = database.getReference("shopping");
+            DatabaseReference myRef = database.getReference("basket");
 
             myRef.push().setValue( item )
                     .addOnSuccessListener( new OnSuccessListener<Void>() {

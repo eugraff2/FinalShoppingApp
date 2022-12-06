@@ -160,7 +160,7 @@ implements AddItemDialogFragment.AddItemDialogListener, EditItemDialogFragment.E
                     dataSnapshot.getRef().setValue( item ).addOnSuccessListener( new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(getApplicationContext(), "Job lead updated for " + item.getName(),
+                            Toast.makeText(getApplicationContext(), "Item updated for " + item.getName(),
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -196,7 +196,7 @@ implements AddItemDialogFragment.AddItemDialogListener, EditItemDialogFragment.E
                     dataSnapshot.getRef().removeValue().addOnSuccessListener( new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(getApplicationContext(), "Job lead deleted for " + item.getName(),
+                            Toast.makeText(getApplicationContext(), "Item deleted for " + item.getName(),
                                     Toast.LENGTH_SHORT).show();                        }
                     });
                 }

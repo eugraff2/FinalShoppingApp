@@ -1,6 +1,5 @@
 package edu.uga.cs.finalshoppingapp;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShoppingListActivity extends AppCompatActivity implements AddItemDialogFragment.AddItemDialogListener, EditItemDialogFragment.EditItemDialogListener {
+public class BasketActivity extends AppCompatActivity implements AddItemDialogFragment.AddItemDialogListener, EditItemDialogFragment.EditItemDialogListener {
 
     private RecyclerView recyclerView;
     private ItemRecyclerAdapter recyclerAdapter;
@@ -52,43 +51,7 @@ public class ShoppingListActivity extends AppCompatActivity implements AddItemDi
             }
         });
 
-        checkoutButton.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                for (int i = 0; i < itemList.size(); i++) {
-
-                    Item item = itemList.get(i);
-                    String key = item.getKey();
-                    String name = item.getName();
-                    double price = item.getPrice();
-
-                    final Item purchasedItem = new Item(name, price);
-
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference myRef = database.getReference("purchased");
-
-                    myRef.push().setValue( item )
-                            .addOnSuccessListener( new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-
-                                }
-                            })
-                            .addOnFailureListener( new OnFailureListener() {
-                                @Override
-                                public void onFailure( @NonNull Exception e ) {
-                                    // do nothing
-                                }
-                            });
-
-                    item.setKey(key);
-                    // deleting the item from the FireBase database
-                    updateItem(i, item, DELETE );
-                } // end for
-
-            }
-
-        });
+        checkoutButton.setOnClickListener(new checkoutListener());
 
         // initialize the Item list
         itemList = new ArrayList<Item>();
@@ -98,12 +61,12 @@ public class ShoppingListActivity extends AppCompatActivity implements AddItemDi
         recyclerView.setLayoutManager(layoutManager);
 
         // the recycler adapter with item is empty at first; it will be updated later
-        recyclerAdapter = new ItemRecyclerAdapter( itemList, ShoppingListActivity.this );
+        recyclerAdapter = new ItemRecyclerAdapter( itemList, BasketActivity.this );
         recyclerView.setAdapter( recyclerAdapter );
 
         // get a Firebase DB instance reference
         db = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = db.getReference("shopping");
+        DatabaseReference myRef = db.getReference("basket");
 
         // Set up a listener (event handler) to receive a value for the database reference.
         // This type of listener is called by Firebase once by immediately executing its onDataChange method
@@ -138,7 +101,7 @@ public class ShoppingListActivity extends AppCompatActivity implements AddItemDi
         // add the new job lead
         // Add a new element (JobLead) to the list of job leads in Firebase.
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("shopping");
+        DatabaseReference myRef = database.getReference("basket");
 
         // First, a call to push() appends a new node to the existing list (one is created
         // if this is done for the first time).  Then, we set the value in the newly created
@@ -190,7 +153,7 @@ public class ShoppingListActivity extends AppCompatActivity implements AddItemDi
             // Note that we are using a specific key (one child in the list)
             DatabaseReference ref = db
                     .getReference()
-                    .child( "shopping" )
+                    .child( "basket" )
                     .child( item.getKey() );
 
             // This listener will be invoked asynchronously, hence no need for an AsyncTask class, as in the previous apps
@@ -201,7 +164,7 @@ public class ShoppingListActivity extends AppCompatActivity implements AddItemDi
                     dataSnapshot.getRef().setValue( item ).addOnSuccessListener( new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(getApplicationContext(), "Job lead updated for " + item.getName(),
+                            Toast.makeText(getApplicationContext(), "Item updated for " + item.getName(),
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -226,7 +189,7 @@ public class ShoppingListActivity extends AppCompatActivity implements AddItemDi
             // Note that we are using a specific key (one child in the list)
             DatabaseReference ref = db
                     .getReference()
-                    .child( "shopping" )
+                    .child( "basket" )
                     .child( item.getKey() );
 
             // This listener will be invoked asynchronously, hence no need for an AsyncTask class, as in the previous apps
@@ -250,6 +213,47 @@ public class ShoppingListActivity extends AppCompatActivity implements AddItemDi
             });
         }
     } // updateItem
+
+
+    private class checkoutListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+
+            ArrayList<Item> purchased = new ArrayList<>();
+            for (int i = 0; i < itemList.size(); i++) {
+
+                final Item item = itemList.get(i);
+                String key = item.getKey();
+                String name = item.getName();
+                double price = item.getPrice();
+
+                Item purchasedItem = new Item(name, price);
+                item.setKey(key);
+
+                purchased.add(purchasedItem);
+
+                updateItem(i, item, DELETE );
+
+            } // end for
+
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("purchased");
+            myRef.push().setValue( purchased )
+                    .addOnSuccessListener( new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+
+                        }
+                    })
+                    .addOnFailureListener( new OnFailureListener() {
+                        @Override
+                        public void onFailure( @NonNull Exception e ) {
+                            // do nothing
+                        }
+                    });
+
+        }
+    }
 
 
 } // ShoppingListActivity

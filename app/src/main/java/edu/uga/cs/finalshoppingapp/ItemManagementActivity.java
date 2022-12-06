@@ -2,7 +2,6 @@ package edu.uga.cs.finalshoppingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -82,7 +81,7 @@ public class ItemManagementActivity extends AppCompatActivity {
     private class shoppingListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(view.getContext(), ShoppingListActivity.class);
+            Intent intent = new Intent(view.getContext(), BasketActivity.class);
             view.getContext().startActivity(intent);
         }
     }

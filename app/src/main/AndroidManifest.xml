@@ -45,7 +45,7 @@
             android:parentActivityName=".ItemManagementActivity">
         </activity>
 
-        <activity android:name=".ShoppingListActivity"
+        <activity android:name=".BasketActivity"
             android:parentActivityName=".ItemManagementActivity">
         </activity>
 
