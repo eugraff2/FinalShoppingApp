@@ -128,7 +128,7 @@ public class BasketActivity extends AppCompatActivity implements AddItemDialogFr
                         } );
 
                         // Show a quick confirmation
-                        Toast.makeText(getApplicationContext(), "Item created for " + item.getName(),
+                        Toast.makeText(getApplicationContext(), item.getName() + " created",
                                 Toast.LENGTH_SHORT).show();
 
                     }
@@ -136,7 +136,7 @@ public class BasketActivity extends AppCompatActivity implements AddItemDialogFr
                 .addOnFailureListener( new OnFailureListener() {
                     @Override
                     public void onFailure( @NonNull Exception e ) {
-                        Toast.makeText( getApplicationContext(), "Failed to create a Item for " + item.getName(),
+                        Toast.makeText( getApplicationContext(),  item.getName() + " failed to create",
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -164,7 +164,7 @@ public class BasketActivity extends AppCompatActivity implements AddItemDialogFr
                     dataSnapshot.getRef().setValue( item ).addOnSuccessListener( new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(getApplicationContext(), "Item updated for " + item.getName(),
+                            Toast.makeText(getApplicationContext(), item.getName() + " updated",
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -172,7 +172,7 @@ public class BasketActivity extends AppCompatActivity implements AddItemDialogFr
 
                 @Override
                 public void onCancelled( @NonNull DatabaseError databaseError ) {
-                    Toast.makeText(getApplicationContext(), "Failed to update " + item.getName(),
+                    Toast.makeText(getApplicationContext(),  item.getName() + " failed to update",
                             Toast.LENGTH_SHORT).show();
                 }
             });
@@ -200,14 +200,14 @@ public class BasketActivity extends AppCompatActivity implements AddItemDialogFr
                     dataSnapshot.getRef().removeValue().addOnSuccessListener( new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(getApplicationContext(), "Job lead deleted for " + item.getName(),
+                            Toast.makeText(getApplicationContext(), item.getName() + " deleted",
                                     Toast.LENGTH_SHORT).show();                        }
                     });
                 }
 
                 @Override
                 public void onCancelled( @NonNull DatabaseError databaseError ) {
-                    Toast.makeText(getApplicationContext(), "Failed to delete " + item.getName(),
+                    Toast.makeText(getApplicationContext(), item.getName() + " failed to delete",
                             Toast.LENGTH_SHORT).show();
                 }
             });
@@ -220,7 +220,7 @@ public class BasketActivity extends AppCompatActivity implements AddItemDialogFr
         public void onClick(View v) {
 
             ArrayList<Item> purchased = new ArrayList<>();
-            for (int i = 0; i < itemList.size(); i++) {
+            for (int i = itemList.size() - 1; i >= 0; i--) {
 
                 final Item item = itemList.get(i);
                 String key = item.getKey();
@@ -231,7 +231,6 @@ public class BasketActivity extends AppCompatActivity implements AddItemDialogFr
                 item.setKey(key);
 
                 purchased.add(purchasedItem);
-
                 updateItem(i, item, EditItemDialogFragment.DELETE );
 
             } // end for

@@ -124,7 +124,7 @@ implements AddItemDialogFragment.AddItemDialogListener, EditItemDialogFragment.E
                         } );
 
                         // Show a quick confirmation
-                        Toast.makeText(getApplicationContext(), "Item created for " + item.getName(),
+                        Toast.makeText(getApplicationContext(), item.getName() + " created",
                                 Toast.LENGTH_SHORT).show();
 
                     }
@@ -132,7 +132,7 @@ implements AddItemDialogFragment.AddItemDialogListener, EditItemDialogFragment.E
                 .addOnFailureListener( new OnFailureListener() {
                     @Override
                     public void onFailure( @NonNull Exception e ) {
-                        Toast.makeText( getApplicationContext(), "Failed to create a Item for " + item.getName(),
+                        Toast.makeText( getApplicationContext(), item.getName() + " failed to created",
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -160,7 +160,7 @@ implements AddItemDialogFragment.AddItemDialogListener, EditItemDialogFragment.E
                     dataSnapshot.getRef().setValue( item ).addOnSuccessListener( new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(getApplicationContext(), "Item updated for " + item.getName(),
+                            Toast.makeText(getApplicationContext(), item.getName() + " updated",
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -168,7 +168,7 @@ implements AddItemDialogFragment.AddItemDialogListener, EditItemDialogFragment.E
 
                 @Override
                 public void onCancelled( @NonNull DatabaseError databaseError ) {
-                    Toast.makeText(getApplicationContext(), "Failed to update " + item.getName(),
+                    Toast.makeText(getApplicationContext(), item.getName() + " failed to update",
                             Toast.LENGTH_SHORT).show();
                 }
             });
@@ -196,14 +196,14 @@ implements AddItemDialogFragment.AddItemDialogListener, EditItemDialogFragment.E
                     dataSnapshot.getRef().removeValue().addOnSuccessListener( new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(getApplicationContext(), "Item deleted for " + item.getName(),
+                            Toast.makeText(getApplicationContext(), item.getName() + " deleted",
                                     Toast.LENGTH_SHORT).show();                        }
                     });
                 }
 
                 @Override
                 public void onCancelled( @NonNull DatabaseError databaseError ) {
-                    Toast.makeText(getApplicationContext(), "Failed to delete " + item.getName(),
+                    Toast.makeText(getApplicationContext(), item.getName() + " failed to delete",
                             Toast.LENGTH_SHORT).show();
                 }
             });
