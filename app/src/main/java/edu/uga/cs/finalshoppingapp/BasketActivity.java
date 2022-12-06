@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,7 +41,7 @@ public class BasketActivity extends AppCompatActivity implements AddItemDialogFr
         recyclerView = findViewById( R.id.recyclerView );
 
         FloatingActionButton floatingButton = findViewById(R.id.floatingActionButton);
-        Button checkoutButton = findViewById(R.id.button4);
+        Button checkoutButton = findViewById(R.id.button5);
 
         floatingButton.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -200,7 +202,7 @@ public class BasketActivity extends AppCompatActivity implements AddItemDialogFr
                     dataSnapshot.getRef().removeValue().addOnSuccessListener( new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(getApplicationContext(), "Job lead deleted for " + item.getName(),
+                            Toast.makeText(getApplicationContext(), "Item deleted for " + item.getName(),
                                     Toast.LENGTH_SHORT).show();                        }
                     });
                 }
@@ -219,8 +221,14 @@ public class BasketActivity extends AppCompatActivity implements AddItemDialogFr
         @Override
         public void onClick(View v) {
 
-            ArrayList<Item> purchased = new ArrayList<>();
-            for (int i = 0; i < itemList.size(); i++) {
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            FirebaseUser currentUser = mAuth.getCurrentUser();
+            String username = currentUser.getDisplayName();
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("purchased");
+
+            List<Item> purchased = new ArrayList<>();
+            for (int i = itemList.size() - 1; i >= 0; i--) {
 
                 final Item item = itemList.get(i);
                 String key = item.getKey();
@@ -228,6 +236,7 @@ public class BasketActivity extends AppCompatActivity implements AddItemDialogFr
                 double price = item.getPrice();
 
                 Item purchasedItem = new Item(name, price);
+                purchasedItem.setUser(username);
                 item.setKey(key);
 
                 purchased.add(purchasedItem);
@@ -236,8 +245,6 @@ public class BasketActivity extends AppCompatActivity implements AddItemDialogFr
 
             } // end for
 
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference myRef = database.getReference("purchased");
             myRef.push().setValue( purchased )
                     .addOnSuccessListener( new OnSuccessListener<Void>() {
                         @Override
@@ -251,6 +258,7 @@ public class BasketActivity extends AppCompatActivity implements AddItemDialogFr
                             // do nothing
                         }
                     });
+
 
         }
     }

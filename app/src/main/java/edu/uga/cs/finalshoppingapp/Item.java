@@ -4,7 +4,7 @@ package edu.uga.cs.finalshoppingapp;
 
 public class Item {
 
-    private String key, name;
+    private String key, name, user;
     private double price;
 
     public Item() {
@@ -26,6 +26,9 @@ public class Item {
     public void setKey(String keyIn) {this.key = keyIn;}
     public void setName(String nameIn) {this.name = nameIn;}
     public void setPrice(double priceIn) {this.price = priceIn;}
+
+    public void setUser(String userIn) {this.user = userIn;}
+    public String getUser() {return this.user;}
 
     public String toString() {return name + ": " + price;}
 
