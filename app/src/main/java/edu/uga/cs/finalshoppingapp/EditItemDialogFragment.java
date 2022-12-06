@@ -69,7 +69,10 @@ public class EditItemDialogFragment extends DialogFragment {
         if (getActivity() instanceof BasketActivity) {
             shoppingButt.setText("Move back to \"all items\" list");
             shoppingButt.setOnClickListener(new MoveBackListener());
-        } else {
+        } else if (getActivity() instanceof SettleActivity) {
+            shoppingButt.setText("Move back to basket");
+            shoppingButt.setOnClickListener(new RemoveClickListener());
+        }else {
             shoppingButt.setOnClickListener(new AddShopListener());
         }
         nameText.setText(itemName);
@@ -203,5 +206,40 @@ public class EditItemDialogFragment extends DialogFragment {
 
     } //MoveBackListener
 
+
+    private class RemoveClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            String name = nameText.getText().toString();
+            double price = Double.parseDouble(priceText.getText().toString());
+            final Item item = new Item(name, price);
+
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("basket");
+
+            myRef.push().setValue( item )
+                    .addOnSuccessListener( new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            // Clear the EditTexts for next use.
+                            nameText.setText("");
+                            priceText.setText("");
+                        }
+                    })
+                    .addOnFailureListener( new OnFailureListener() {
+                        @Override
+                        public void onFailure( @NonNull Exception e ) {
+                            // do nothing
+                        }
+                    });
+
+            item.setKey(key);
+            // deleting the item from the FireBase database
+            EditItemDialogFragment.EditItemDialogListener listener = (EditItemDialogFragment.EditItemDialogListener) getActivity();
+            listener.updateItem( position, item, DELETE );
+            shoppingButt.setEnabled(false);
+        }
+
+    } //MoveBackListener
 
 } // EditItemDialogFragment

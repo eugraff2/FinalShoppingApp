@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,7 +31,7 @@ public class SettleActivity extends AppCompatActivity implements AddItemDialogFr
     private List<Item> itemList;
     private FirebaseDatabase db;
 
-    double totalPrice;
+    double totalPrice, calcPrice;
     int numPeople;
 
     @Override
@@ -39,9 +40,32 @@ public class SettleActivity extends AppCompatActivity implements AddItemDialogFr
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_settle );
 
+        totalPrice = 0.0;
+        numPeople = 4;
+
         recyclerView = findViewById( R.id.recyclerView );
 
         Button checkoutButton = findViewById(R.id.button5);
+        checkoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+                for (int i = itemList.size() - 1; i >= 0; i--) {
+
+                    Item item = itemList.get(i);
+                    String key = item.getKey();
+                    totalPrice += item.getPrice();
+
+                    item.setKey(key);
+                    updateItem(i, item, EditItemDialogFragment.DELETE );
+
+                } // end for
+
+                calcPrice = totalPrice/ (double)numPeople;
+
+            }
+        });
 
         // initialize the Item list
         itemList = new ArrayList<Item>();

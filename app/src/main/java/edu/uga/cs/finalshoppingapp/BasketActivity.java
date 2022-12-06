@@ -223,41 +223,37 @@ public class BasketActivity extends AppCompatActivity implements AddItemDialogFr
 
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
             FirebaseUser currentUser = mAuth.getCurrentUser();
-            String username = currentUser.getDisplayName();
+            String username = currentUser.getEmail();
+            System.out.println(username);
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference("purchased");
 
-            List<Item> purchased = new ArrayList<>();
             for (int i = itemList.size() - 1; i >= 0; i--) {
 
-                final Item item = itemList.get(i);
+                Item item = itemList.get(i);
+                item.setUser(username);
                 String key = item.getKey();
-                String name = item.getName();
-                double price = item.getPrice();
 
-                Item purchasedItem = new Item(name, price);
-                purchasedItem.setUser(username);
+                myRef.push().setValue( item )
+                        .addOnSuccessListener( new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+
+                            }
+                        })
+                        .addOnFailureListener( new OnFailureListener() {
+                            @Override
+                            public void onFailure( @NonNull Exception e ) {
+                                // do nothing
+                            }
+                        });
+
+
                 item.setKey(key);
-
-                purchased.add(purchasedItem);
-
                 updateItem(i, item, EditItemDialogFragment.DELETE );
 
             } // end for
 
-            myRef.push().setValue( purchased )
-                    .addOnSuccessListener( new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-
-                        }
-                    })
-                    .addOnFailureListener( new OnFailureListener() {
-                        @Override
-                        public void onFailure( @NonNull Exception e ) {
-                            // do nothing
-                        }
-                    });
 
 
         }
