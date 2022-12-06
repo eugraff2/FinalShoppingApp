@@ -15,6 +15,8 @@ import androidx.fragment.app.DialogFragment;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -105,11 +107,18 @@ public class EditItemDialogFragment extends DialogFragment {
     private class SaveButtonClickListener implements DialogInterface.OnClickListener {
         @Override
         public void onClick(DialogInterface dialog, int which) {
+
             String name = nameText.getText().toString();
             double price = Double.parseDouble(priceText.getText().toString());
 
             Item item = new Item(name, price);
             item.setKey( key );
+            if (getActivity() instanceof SettleActivity) {
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                String username = currentUser.getEmail();
+                item.setUser(username);
+            }
 
             // get the Activity's listener to add the new item
             EditItemDialogListener listener = (EditItemDialogFragment.EditItemDialogListener) getActivity();
