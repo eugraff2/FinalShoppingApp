@@ -31,58 +31,57 @@
         android:id="@+id/settleButton"
         android:layout_width="185dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="65dp"
         android:backgroundTint="@color/my_maroon"
         android:fontFamily="@font/roboto"
         android:text="Settle the Cost"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/dollar_sign"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewallButton" />
+        app:layout_constraintTop_toBottomOf="@+id/shoppingButton" />
 
     <Button
         android:id="@+id/addButton"
         android:layout_width="185dp"
         android:layout_height="52dp"
+        android:layout_marginEnd="65dp"
         android:backgroundTint="@color/my_purple"
         android:fontFamily="@font/roboto"
         android:text="Add an item"
         android:textAllCaps="false"
-        app:layout_constraintBottom_toTopOf="@+id/shoppingButton"
-        app:layout_constraintEnd_toEndOf="@+id/shoppingButton"
+        app:layout_constraintBottom_toBottomOf="@+id/add"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/add"
-        app:layout_constraintStart_toStartOf="@+id/shoppingButton"
-        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+        app:layout_constraintTop_toTopOf="@+id/add" />
 
     <Button
         android:id="@+id/shoppingButton"
         android:layout_width="185dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="65dp"
         android:backgroundTint="@color/my_maroon"
         android:fontFamily="@font/roboto"
         android:text="Shopping Basket"
         android:textAllCaps="false"
-        app:layout_constraintBottom_toTopOf="@+id/viewallButton"
-        app:layout_constraintEnd_toEndOf="@+id/viewallButton"
-        app:layout_constraintStart_toEndOf="@+id/shopping_list"
-        app:layout_constraintStart_toStartOf="@+id/viewallButton"
-        app:layout_constraintTop_toBottomOf="@+id/addButton" />
+        app:layout_constraintBottom_toTopOf="@+id/settleButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/shopping_cart"
+        app:layout_constraintTop_toBottomOf="@+id/viewallButton" />
 
     <Button
         android:id="@+id/viewallButton"
         android:layout_width="185dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="65dp"
         android:backgroundTint="@color/my_purple"
         android:fontFamily="@font/roboto"
         android:text="View Shopping List"
         android:textAllCaps="false"
-        app:layout_constraintBottom_toTopOf="@+id/settleButton"
-        app:layout_constraintEnd_toEndOf="@+id/settleButton"
-        app:layout_constraintStart_toEndOf="@+id/shopping_cart"
-        app:layout_constraintStart_toStartOf="@+id/settleButton"
-        app:layout_constraintTop_toBottomOf="@+id/shoppingButton" />
+        app:layout_constraintBottom_toBottomOf="@+id/shopping_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/shopping_list"
+        app:layout_constraintTop_toTopOf="@+id/shopping_list" />
 
     <Button
         android:id="@+id/logoutButton"
@@ -94,56 +93,49 @@
         android:textAllCaps="true"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintVertical_bias="0.34" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <ImageView
         android:id="@+id/shopping_cart"
         android:layout_width="28dp"
         android:layout_height="30dp"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="65dp"
         android:src="@drawable/shopping_cart"
-        app:layout_constraintBottom_toTopOf="@+id/shopping_list"
+        app:layout_constraintBottom_toBottomOf="@+id/shoppingButton"
         app:layout_constraintEnd_toStartOf="@+id/shoppingButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add"
-        app:layout_constraintVertical_bias="0.394" />
+        app:layout_constraintTop_toTopOf="@+id/shoppingButton" />
 
     <ImageView
         android:id="@+id/shopping_list"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="65dp"
         android:src="@drawable/shopping_list"
-        app:layout_constraintBottom_toTopOf="@+id/dollar_sign"
         app:layout_constraintEnd_toStartOf="@+id/viewallButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/shopping_cart"
-        app:layout_constraintVertical_bias="0.617" />
+        tools:layout_editor_absoluteY="394dp" />
 
     <ImageView
         android:id="@+id/dollar_sign"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="65dp"
         android:src="@drawable/settle_cost"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/settleButton"
         app:layout_constraintEnd_toStartOf="@+id/settleButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/shopping_list"
-        app:layout_constraintVertical_bias="0.838" />
+        app:layout_constraintTop_toTopOf="@+id/settleButton" />
 
     <ImageView
         android:id="@+id/add"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="65dp"
         android:src="@drawable/add"
-        app:layout_constraintBottom_toTopOf="@+id/shopping_cart"
         app:layout_constraintEnd_toStartOf="@+id/addButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+        tools:layout_editor_absoluteY="273dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
