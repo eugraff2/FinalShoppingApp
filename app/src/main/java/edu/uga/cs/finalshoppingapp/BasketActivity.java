@@ -30,8 +30,6 @@ public class BasketActivity extends AppCompatActivity implements AddItemDialogFr
     private List<Item> itemList;
     private FirebaseDatabase db;
 
-    public static final int DELETE = 2;
-
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
 
@@ -51,10 +49,12 @@ public class BasketActivity extends AppCompatActivity implements AddItemDialogFr
             }
         });
 
-        checkoutButton.setOnClickListener(new checkoutListener());
 
         // initialize the Item list
         itemList = new ArrayList<Item>();
+
+        checkoutButton.setOnClickListener(new checkoutListener());
+
 
         // use a linear layout manager for the recycler view
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -232,7 +232,7 @@ public class BasketActivity extends AppCompatActivity implements AddItemDialogFr
 
                 purchased.add(purchasedItem);
 
-                updateItem(i, item, DELETE );
+                updateItem(i, item, EditItemDialogFragment.DELETE );
 
             } // end for
 
