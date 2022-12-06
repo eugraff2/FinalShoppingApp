@@ -1,5 +1,8 @@
 package edu.uga.cs.finalshoppingapp;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -7,14 +10,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,9 +43,9 @@ public class SettleActivity extends AppCompatActivity implements AddItemDialogFr
         totalPrice = 0.0;
         numPeople = 4;
 
-        recyclerView = findViewById( R.id.recyclerView );
 
         Button checkoutButton = findViewById(R.id.button5);
+        RecyclerView recyclerView = findViewById(R.id.recycleIt);
         checkoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,6 +64,10 @@ public class SettleActivity extends AppCompatActivity implements AddItemDialogFr
 
                 calcPrice = totalPrice/ (double)numPeople;
 
+               Bundle args = new Bundle();
+               Intent intent = new Intent(view.getContext(), FinalSettleActivity.class);
+               intent.putExtra("cost", calcPrice);
+               startActivity( intent );
             }
         });
 
@@ -81,6 +85,7 @@ public class SettleActivity extends AppCompatActivity implements AddItemDialogFr
         // get a Firebase DB instance reference
         db = FirebaseDatabase.getInstance();
         DatabaseReference myRef = db.getReference("purchased");
+
 
         // Set up a listener (event handler) to receive a value for the database reference.
         // This type of listener is called by Firebase once by immediately executing its onDataChange method
