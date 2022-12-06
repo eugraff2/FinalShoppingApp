@@ -54,7 +54,7 @@ public class AddItemActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Void aVoid) {
                             // Show a quick confirmation
-                            Toast.makeText(getApplicationContext(), "Item created for " + item.getName(),
+                            Toast.makeText(getApplicationContext(), item.getName() + " added to Shopping List ",
                                     Toast.LENGTH_SHORT).show();
 
                             // Clear the EditTexts for next use.
@@ -65,7 +65,7 @@ public class AddItemActivity extends AppCompatActivity {
                     .addOnFailureListener( new OnFailureListener() {
                         @Override
                         public void onFailure( @NonNull Exception e ) {
-                            Toast.makeText( getApplicationContext(), "Failed to create a item for " + item.getName(),
+                            Toast.makeText( getApplicationContext(), item.getName() + " failed to create",
                                     Toast.LENGTH_SHORT).show();
                         }
                     });

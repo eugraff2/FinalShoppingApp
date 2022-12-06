@@ -55,7 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
 
                                 Toast.makeText( getApplicationContext(),
-                                        "Registered user: " + email,
+                                        email + " registered!",
                                         Toast.LENGTH_SHORT ).show();
 
                                 // Sign in success, update UI with the signed-in user's information
