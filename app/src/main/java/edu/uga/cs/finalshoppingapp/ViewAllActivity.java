@@ -49,14 +49,14 @@ implements AddItemDialogFragment.AddItemDialogListener, EditItemDialogFragment.E
             }
         });
 
-        // initialize the Job Lead list
+        // initialize the item list
         itemList = new ArrayList<Item>();
 
         // use a linear layout manager for the recycler view
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        // the recycler adapter with job leads is empty at first; it will be updated later
+        // the recycler adapter with items is empty at first; it will be updated later
         recyclerAdapter = new ItemRecyclerAdapter( itemList, ViewAllActivity.this );
         recyclerView.setAdapter( recyclerAdapter );
 
@@ -69,12 +69,12 @@ implements AddItemDialogFragment.AddItemDialogListener, EditItemDialogFragment.E
         // and then each time the value at Firebase changes.
         //
         // This listener will be invoked asynchronously, hence no need for an AsyncTask class, as in the previous apps
-        // to maintain job leads.
+        // to maintain items.
         myRef.addValueEventListener( new ValueEventListener() {
 
             @Override
             public void onDataChange( @NonNull DataSnapshot snapshot ) {
-                // Once we have a DataSnapshot object, we need to iterate over the elements and place them on our job lead list.
+                // Once we have a DataSnapshot object, we need to iterate over the elements and place them on our item list.
                 itemList.clear(); // clear the current content; this is inefficient!
                 for( DataSnapshot postSnapshot: snapshot.getChildren() ) {
                     Item item = postSnapshot.getValue(Item.class);
@@ -92,18 +92,18 @@ implements AddItemDialogFragment.AddItemDialogListener, EditItemDialogFragment.E
         } );
     }
 
-    // this is our own callback for a AddJobLeadDialogFragment which adds a new job lead.
+    // this is our own callback for a AddJobLeadDialogFragment which adds a new item.
     public void addItem(Item item) {
-        // add the new job lead
-        // Add a new element (JobLead) to the list of job leads in Firebase.
+        // add the new item
+        // Add a new element (JobLead) to the list of items in Firebase.
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("items");
 
         // First, a call to push() appends a new node to the existing list (one is created
         // if this is done for the first time).  Then, we set the value in the newly created
-        // list node to store the new job lead.
+        // list node to store the new item.
         // This listener will be invoked asynchronously, as no need for an AsyncTask, as in
-        // the previous apps to maintain job leads.
+        // the previous apps to maintain items.
         myRef.push().setValue( item )
                 .addOnSuccessListener( new OnSuccessListener<Void>() {
                     @Override
@@ -124,7 +124,7 @@ implements AddItemDialogFragment.AddItemDialogListener, EditItemDialogFragment.E
                         } );
 
                         // Show a quick confirmation
-                        Toast.makeText(getApplicationContext(), "Item created for " + item.getName(),
+                        Toast.makeText(getApplicationContext(), item.getName() + " created",
                                 Toast.LENGTH_SHORT).show();
 
                     }
@@ -132,7 +132,7 @@ implements AddItemDialogFragment.AddItemDialogListener, EditItemDialogFragment.E
                 .addOnFailureListener( new OnFailureListener() {
                     @Override
                     public void onFailure( @NonNull Exception e ) {
-                        Toast.makeText( getApplicationContext(), "Failed to create a Item for " + item.getName(),
+                        Toast.makeText( getApplicationContext(), item.getName() + " failed to create",
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -142,10 +142,10 @@ implements AddItemDialogFragment.AddItemDialogListener, EditItemDialogFragment.E
     public void updateItem( int position, Item item, int action ) {
         if( action == EditItemDialogFragment.SAVE ) {
 
-            // Update the recycler view to show the changes in the updated job lead in that view
+            // Update the recycler view to show the changes in the updated item in that view
             recyclerAdapter.notifyItemChanged( position );
 
-            // Update this job lead in Firebase
+            // Update this item in Firebase
             // Note that we are using a specific key (one child in the list)
             DatabaseReference ref = db
                     .getReference()
@@ -153,14 +153,14 @@ implements AddItemDialogFragment.AddItemDialogListener, EditItemDialogFragment.E
                     .child( item.getKey() );
 
             // This listener will be invoked asynchronously, hence no need for an AsyncTask class, as in the previous apps
-            // to maintain job leads.
+            // to maintain items.
             ref.addListenerForSingleValueEvent( new ValueEventListener() {
                 @Override
                 public void onDataChange( @NonNull DataSnapshot dataSnapshot ) {
                     dataSnapshot.getRef().setValue( item ).addOnSuccessListener( new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(getApplicationContext(), "Job lead updated for " + item.getName(),
+                            Toast.makeText(getApplicationContext(), item.getName() + " updated",
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -168,20 +168,20 @@ implements AddItemDialogFragment.AddItemDialogListener, EditItemDialogFragment.E
 
                 @Override
                 public void onCancelled( @NonNull DatabaseError databaseError ) {
-                    Toast.makeText(getApplicationContext(), "Failed to update " + item.getName(),
+                    Toast.makeText(getApplicationContext(), item.getName() + " failed to update",
                             Toast.LENGTH_SHORT).show();
                 }
             });
         }
         else if( action == EditItemDialogFragment.DELETE ) {
 
-            // remove the deleted job lead from the list (internal list in the App)
+            // remove the deleted item from the list (internal list in the App)
             itemList.remove( position );
 
-            // Update the recycler view to remove the deleted job lead from that view
+            // Update the recycler view to remove the deleted item from that view
             recyclerAdapter.notifyItemRemoved( position );
 
-            // Delete this job lead in Firebase.
+            // Delete this item in Firebase.
             // Note that we are using a specific key (one child in the list)
             DatabaseReference ref = db
                     .getReference()
@@ -189,21 +189,22 @@ implements AddItemDialogFragment.AddItemDialogListener, EditItemDialogFragment.E
                     .child( item.getKey() );
 
             // This listener will be invoked asynchronously, hence no need for an AsyncTask class, as in the previous apps
-            // to maintain job leads.
+            // to maintain items.
             ref.addListenerForSingleValueEvent( new ValueEventListener() {
                 @Override
                 public void onDataChange( @NonNull DataSnapshot dataSnapshot ) {
                     dataSnapshot.getRef().removeValue().addOnSuccessListener( new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(getApplicationContext(), "Job lead deleted for " + item.getName(),
+                            Toast.makeText(getApplicationContext(), item.getName() + " added to cart",
                                     Toast.LENGTH_SHORT).show();                        }
+
                     });
                 }
 
                 @Override
                 public void onCancelled( @NonNull DatabaseError databaseError ) {
-                    Toast.makeText(getApplicationContext(), "Failed to delete " + item.getName(),
+                    Toast.makeText(getApplicationContext(), item.getName() + " failed to add to cart" ,
                             Toast.LENGTH_SHORT).show();
                 }
             });

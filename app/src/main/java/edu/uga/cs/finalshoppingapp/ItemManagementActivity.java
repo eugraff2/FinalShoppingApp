@@ -39,10 +39,10 @@ public class ItemManagementActivity extends AppCompatActivity {
                 if( currentUser != null ) {
                     // User is signed in
                     String userEmail = currentUser.getEmail();
-                    signedinText.setText( "Signed in as: " + userEmail );
+                    signedinText.setText( "Account: " + userEmail );
                 } else {
                     // User is signed out
-                    signedinText.setText( "Signed in as: not signed in" );
+                    signedinText.setText( "Not Signed In" );
                 }
             }
         });

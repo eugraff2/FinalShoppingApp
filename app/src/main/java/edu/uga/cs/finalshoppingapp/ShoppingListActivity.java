@@ -135,16 +135,16 @@ public class ShoppingListActivity extends AppCompatActivity implements AddItemDi
 
     // this is our own callback for a AddItemDialogFragment which adds a new item.
     public void addItem(Item item) {
-        // add the new job lead
-        // Add a new element (JobLead) to the list of job leads in Firebase.
+        // add the new item
+        // Add a new element (JobLead) to the list of items in Firebase.
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("shopping");
 
         // First, a call to push() appends a new node to the existing list (one is created
         // if this is done for the first time).  Then, we set the value in the newly created
-        // list node to store the new job lead.
+        // list node to store the new item.
         // This listener will be invoked asynchronously, as no need for an AsyncTask, as in
-        // the previous apps to maintain job leads.
+        // the previous apps to maintain items.
         myRef.push().setValue( item )
                 .addOnSuccessListener( new OnSuccessListener<Void>() {
                     @Override
@@ -165,7 +165,7 @@ public class ShoppingListActivity extends AppCompatActivity implements AddItemDi
                         } );
 
                         // Show a quick confirmation
-                        Toast.makeText(getApplicationContext(), "Item created for " + item.getName(),
+                        Toast.makeText(getApplicationContext(), item.getName()  + " created",
                                 Toast.LENGTH_SHORT).show();
 
                     }
@@ -173,7 +173,7 @@ public class ShoppingListActivity extends AppCompatActivity implements AddItemDi
                 .addOnFailureListener( new OnFailureListener() {
                     @Override
                     public void onFailure( @NonNull Exception e ) {
-                        Toast.makeText( getApplicationContext(), "Failed to create a Item for " + item.getName(),
+                        Toast.makeText( getApplicationContext(), item.getName()  + " failed to create",
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -186,7 +186,7 @@ public class ShoppingListActivity extends AppCompatActivity implements AddItemDi
             // Update the recycler view to show the changes in the updated item in that view
             recyclerAdapter.notifyItemChanged( position );
 
-            // Update this job lead in Firebase
+            // Update this item in Firebase
             // Note that we are using a specific key (one child in the list)
             DatabaseReference ref = db
                     .getReference()
@@ -194,14 +194,14 @@ public class ShoppingListActivity extends AppCompatActivity implements AddItemDi
                     .child( item.getKey() );
 
             // This listener will be invoked asynchronously, hence no need for an AsyncTask class, as in the previous apps
-            // to maintain job leads.
+            // to maintain items.
             ref.addListenerForSingleValueEvent( new ValueEventListener() {
                 @Override
                 public void onDataChange( @NonNull DataSnapshot dataSnapshot ) {
                     dataSnapshot.getRef().setValue( item ).addOnSuccessListener( new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(getApplicationContext(), "Job lead updated for " + item.getName(),
+                            Toast.makeText(getApplicationContext(), item.getName() + " updated",
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -209,20 +209,20 @@ public class ShoppingListActivity extends AppCompatActivity implements AddItemDi
 
                 @Override
                 public void onCancelled( @NonNull DatabaseError databaseError ) {
-                    Toast.makeText(getApplicationContext(), "Failed to update " + item.getName(),
+                    Toast.makeText(getApplicationContext(),  item.getName() + " failed to update",
                             Toast.LENGTH_SHORT).show();
                 }
             });
         }
         else if( action == EditItemDialogFragment.DELETE ) {
 
-            // remove the deleted job lead from the list (internal list in the App)
+            // remove the deleted item from the list (internal list in the App)
             itemList.remove( position );
 
-            // Update the recycler view to remove the deleted job lead from that view
+            // Update the recycler view to remove the deleted item from that view
             recyclerAdapter.notifyItemRemoved( position );
 
-            // Delete this job lead in Firebase.
+            // Delete this item in Firebase.
             // Note that we are using a specific key (one child in the list)
             DatabaseReference ref = db
                     .getReference()
@@ -230,21 +230,21 @@ public class ShoppingListActivity extends AppCompatActivity implements AddItemDi
                     .child( item.getKey() );
 
             // This listener will be invoked asynchronously, hence no need for an AsyncTask class, as in the previous apps
-            // to maintain job leads.
+            // to maintain items.
             ref.addListenerForSingleValueEvent( new ValueEventListener() {
                 @Override
                 public void onDataChange( @NonNull DataSnapshot dataSnapshot ) {
                     dataSnapshot.getRef().removeValue().addOnSuccessListener( new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(getApplicationContext(), "Job lead deleted for " + item.getName(),
+                            Toast.makeText(getApplicationContext(), item.getName() + " purchased",
                                     Toast.LENGTH_SHORT).show();                        }
                     });
                 }
 
                 @Override
                 public void onCancelled( @NonNull DatabaseError databaseError ) {
-                    Toast.makeText(getApplicationContext(), "Failed to delete " + item.getName(),
+                    Toast.makeText(getApplicationContext(), item.getName() + " failed to purchase" ,
                             Toast.LENGTH_SHORT).show();
                 }
             });

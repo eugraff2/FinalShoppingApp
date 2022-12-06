@@ -25,12 +25,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="186dp" />
+        app:layout_constraintGuide_begin="149dp" />
 
     <Button
         android:id="@+id/settleButton"
         android:layout_width="185dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="56dp"
         android:backgroundTint="@color/my_maroon"
         android:fontFamily="@font/roboto"
         android:text="Settle the Cost"
@@ -39,111 +40,119 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/dollar_sign"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewallButton" />
+        app:layout_constraintTop_toBottomOf="@+id/shoppingButton" />
 
     <Button
         android:id="@+id/addButton"
         android:layout_width="185dp"
         android:layout_height="52dp"
-        android:backgroundTint="@color/my_purple"
+        android:layout_marginEnd="56dp"
+        android:backgroundTint="#C1576B"
         android:fontFamily="@font/roboto"
-        android:text="Add an item"
+        android:text="Add an Item"
         android:textAllCaps="false"
-        app:layout_constraintBottom_toTopOf="@+id/shoppingButton"
-        app:layout_constraintEnd_toEndOf="@+id/shoppingButton"
-        app:layout_constraintStart_toEndOf="@+id/add"
-        app:layout_constraintStart_toStartOf="@+id/shoppingButton"
-        app:layout_constraintTop_toTopOf="@+id/guideline3" />
-
-    <Button
-        android:id="@+id/shoppingButton"
-        android:layout_width="185dp"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/my_maroon"
-        android:fontFamily="@font/roboto"
-        android:text="Shopping Basket"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toTopOf="@+id/viewallButton"
-        app:layout_constraintEnd_toEndOf="@+id/viewallButton"
-        app:layout_constraintStart_toEndOf="@+id/shopping_list"
-        app:layout_constraintStart_toStartOf="@+id/viewallButton"
-        app:layout_constraintTop_toBottomOf="@+id/addButton" />
-
-    <Button
-        android:id="@+id/viewallButton"
-        android:layout_width="185dp"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/my_purple"
-        android:fontFamily="@font/roboto"
-        android:text="View Shopping List"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toTopOf="@+id/settleButton"
-        app:layout_constraintEnd_toEndOf="@+id/settleButton"
-        app:layout_constraintStart_toEndOf="@+id/shopping_cart"
-        app:layout_constraintStart_toStartOf="@+id/settleButton"
-        app:layout_constraintTop_toBottomOf="@+id/shoppingButton" />
-
-    <Button
-        android:id="@+id/logoutButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/my_green"
-        android:fontFamily="@font/roboto"
-        android:text="Log out"
-        android:textAllCaps="true"
-        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintBottom_toBottomOf="@+id/add"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintVertical_bias="0.34" />
-
-    <ImageView
-        android:id="@+id/shopping_cart"
-        android:layout_width="28dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="50dp"
-        android:src="@drawable/shopping_cart"
-        app:layout_constraintBottom_toTopOf="@+id/shopping_list"
-        app:layout_constraintEnd_toStartOf="@+id/shoppingButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add"
-        app:layout_constraintVertical_bias="0.394" />
-
-    <ImageView
-        android:id="@+id/shopping_list"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="50dp"
-        android:src="@drawable/shopping_list"
-        app:layout_constraintBottom_toTopOf="@+id/dollar_sign"
-        app:layout_constraintEnd_toStartOf="@+id/viewallButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/shopping_cart"
-        app:layout_constraintVertical_bias="0.617" />
-
-    <ImageView
-        android:id="@+id/dollar_sign"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="50dp"
-        android:src="@drawable/settle_cost"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/settleButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/shopping_list"
-        app:layout_constraintVertical_bias="0.838" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/add"
+        app:layout_constraintTop_toTopOf="@+id/add" />
 
     <ImageView
         android:id="@+id/add"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="50dp"
         android:src="@drawable/add"
         app:layout_constraintBottom_toTopOf="@+id/shopping_cart"
         app:layout_constraintEnd_toStartOf="@+id/addButton"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <Button
+        android:id="@+id/shoppingButton"
+        android:layout_width="185dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="56dp"
+        android:backgroundTint="#88384F"
+        android:fontFamily="@font/roboto"
+        android:text="View Cart"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="@+id/shopping_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/shopping_list"
+        app:layout_constraintTop_toTopOf="@+id/shopping_list" />
+
+    <ImageView
+        android:id="@+id/shopping_list"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/shopping_list"
+        app:layout_constraintBottom_toTopOf="@+id/dollar_sign"
+        app:layout_constraintEnd_toStartOf="@+id/shoppingButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shopping_cart"
+        app:srcCompat="@drawable/shopping_cart" />
+
+    <Button
+        android:id="@+id/viewallButton"
+        android:layout_width="185dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="56dp"
+        android:backgroundTint="@color/my_purple"
+        android:fontFamily="@font/roboto"
+        android:text="View Shopping List"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="@+id/shopping_cart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/shopping_cart"
+        app:layout_constraintTop_toTopOf="@+id/shopping_cart" />
+
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="@color/my_green"
+        android:fontFamily="@font/roboto"
+        android:includeFontPadding="false"
+        android:paddingLeft="0dp"
+        android:paddingTop="0dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="0dp"
+        android:text="Log out"
+        android:textAllCaps="true"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintVertical_bias="0.184" />
+
+    <ImageView
+        android:id="@+id/shopping_cart"
+        android:layout_width="28dp"
+        android:layout_height="30dp"
+        android:src="@drawable/shopping_cart"
+        app:layout_constraintBottom_toTopOf="@+id/shopping_list"
+        app:layout_constraintEnd_toStartOf="@+id/viewallButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add"
+        app:srcCompat="@drawable/shopping_list" />
+
+    <ImageView
+        android:id="@+id/dollar_sign"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/settle_cost"
+        app:layout_constraintBottom_toBottomOf="@+id/settleButton"
+        app:layout_constraintEnd_toStartOf="@+id/settleButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/settleButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

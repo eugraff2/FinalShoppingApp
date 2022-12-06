@@ -35,7 +35,7 @@ public class AddItemDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(layout);
 
-        builder.setTitle("New item");
+        builder.setTitle("Add Item");
 
         builder.setNegativeButton( android.R.string.cancel, new DialogInterface.OnClickListener() {
             @Override

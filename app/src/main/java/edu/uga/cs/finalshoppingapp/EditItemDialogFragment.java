@@ -79,7 +79,7 @@ public class EditItemDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder( getActivity());
         builder.setView(layout);
 
-        builder.setTitle("Edit item");
+        builder.setTitle("Edit Item");
 
         builder.setNegativeButton( android.R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
@@ -109,9 +109,9 @@ public class EditItemDialogFragment extends DialogFragment {
             Item item = new Item(name, price);
             item.setKey( key );
 
-            // get the Activity's listener to add the new job lead
+            // get the Activity's listener to add the new item
             EditItemDialogListener listener = (EditItemDialogFragment.EditItemDialogListener) getActivity();
-            // add the new job lead
+            // add the new item
             listener.updateItem( position, item, SAVE );
 
             // close the dialog
